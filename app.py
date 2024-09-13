@@ -5,6 +5,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+
 # Create SQLite connection
 def init_db():
     conn = sqlite3.connect('messages.db')
@@ -12,6 +13,7 @@ def init_db():
     cursor.execute('CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY, message TEXT)')
     conn.commit()
     conn.close()
+
 
 @app.route('/api/message', methods=['POST'])
 def receive_message():
@@ -27,6 +29,7 @@ def receive_message():
 
     return jsonify({'response': f'Received and stored: {message}'})
 
+
 @app.route('/api/messages', methods=['GET'])
 def get_messages():
     conn = sqlite3.connect('messages.db')
@@ -36,7 +39,7 @@ def get_messages():
     conn.close()
     return jsonify(messages)
 
+
 if __name__ == '__main__':
     init_db()
     app.run(debug=True, port=5000)
-
